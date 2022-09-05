@@ -151,6 +151,10 @@ router_workloads:
         large_scale_clients_mix: list[int]
         number_of_routers: int
         quit_period: int
+  	workload: list[dict]
+        - dict
+        - dict 
+        ...		
 ```
 
 ```mermaid
