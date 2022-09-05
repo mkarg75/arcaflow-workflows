@@ -155,7 +155,7 @@ router_workloads:
 
 ```mermaid
 graph TD
-	subgraph_schema
+	subgraph schema
 	global_params[global params]
 	platform_params[platform params]
 	sut_params[SUT params]
