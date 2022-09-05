@@ -172,13 +172,11 @@ graph TD
 	sut_params --> net_config
 	net_config --> pod_config
 
-	workloads_list --> workloads_g
+	workloads_list --> scheduling(k8s scheduling)
 ```
-	workloads_g(workloads graph) --> scheduling
-
 	net_config(pod network config) --> pod_config
 
-	metrics_plugin([SUT metrics collection]) --> es
+	metrics_plugin([SUT metrics collection]) --> es(elasticsearch)
 	metadata_plugin([SUT metadata collection]) --> es
 
 	pod_config(k8s pod/job config) --> scheduling
