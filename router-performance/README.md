@@ -20,7 +20,7 @@ graph TD
 
 Global parameters define metadata items that will persist throught the entire workflow, as well as flags for whether specific workload features, and therefore plugins, will be used.
 
-```
+```yaml
 global_params:
 	platform: enum
 	kubeconfig: str
@@ -33,9 +33,16 @@ global_params:
 	prom_token: str
 ```
 
+```mermaid
+graph TD
+	global_params[global_params] --> metrics_plugin([SUT metrics collection])
+	global_params --> metadata_plugin([SUT metadata collection])
+	global_params -- pod_config(k8s pod/job config)
+```
+
 Platform params provide platform-specific authentication and resource values:
 
-```
+```yaml
 platform_params:
 	auth_key1: str
 	auth_key2: str
@@ -43,9 +50,14 @@ platform_params:
 	resource_key2: str
 ```
 
-SUT parameteres affect kubernetes settings for pods and potentially other objects.
-
+```mermaid
+graph TD
+	platform_params[platform_params] --> pod_config(k8s pod/job config)
 ```
+
+SUT parameters affect kubernetes settings for pods and potentially other objects.
+
+```yaml
 sut_params:
 	host_network: bool
 	deployment_replicas: int
@@ -55,9 +67,14 @@ sut_params:
 	ingress_operator_image: str
 ```
 
+```mermaid
+graph TD
+	sut_params[SUT params] --> net_config(pod network config) --> pod_config(k8s pod/job config)
+```
+
 The parameters for the router workloads should be available as defaults that will apply until overridden.
 
-```
+```yaml
 router_workloads:
 	defaults:
 		samples: int
@@ -74,12 +91,28 @@ router_workloads:
 		large_scale_clients_mix: list[int]
 		tls_reuse: bool
 		number_of_routers: int
-		quit_period: int
+		quiet_period: int
+```
+
+Individual workloads should be provided as lists of dicts, where parameters override the `defaults` above. Each list item should accept all parameters supported by the underlying schema.
+
+```yaml
+router_workloads:
+	workload: list[dict]
+		- dict
+		- dict 
+		...
+```
+
+
+```mermaid
+graph TD
+	workload_geometry[workload geometry] --> workloads_g(workload graph) --> scheduling(k8s scheduling)
 ```
 
 ## Complete workflow schema and diagram
 
-```
+```yaml
 global_params:
 	platform: enum
 	kubeconfig: str
@@ -117,3 +150,32 @@ router_workloads:
 		number_of_routers: int
 		quit_period: int
 ```
+
+```mermaid
+graph TD
+	subgraph_schema
+	global_params[global params]
+	platform_params[platform params]
+	sut_params[SUT params]
+	platfrom_params[platform_params]
+	workloads_list[workload lists]
+	end
+
+	global_params --> metrics_plugin
+	global_params --> metadata_plugin
+	global_params --> pod_config
+
+	sut_params --> net_config
+
+	workloads_list --> workloads_g
+
+	workloads_g(workloads graph) --> scheduling
+
+	net_config(pod network config) --> pod_config
+
+	metrics_plugin([SUT metrics collection]) --> es
+	metadata_plugin([SUT metadata collection]) --> es
+
+	pod_config(k8s pod/job config) --> scheduling)
+```
+	
