@@ -162,11 +162,12 @@ graph TD
 	platform_params[platform params]
 	workloads_list[workload lists]
 	end
+```
 
 	global_params --> metrics_plugin
 	global_params --> metadata_plugin
 	global_params --> pod_config
-```
+
 
 	sut_params --> net_config
 
