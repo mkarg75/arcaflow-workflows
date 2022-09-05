@@ -167,7 +167,10 @@ graph TD
 	global_params --> metadata_plugin
 	global_params --> pod_config
 
+	platform_params --> pod_config(k8s pod/job config)
+	
 	sut_params --> net_config
+	net_config --> pod_config
 
 	workloads_list --> workloads_g
 ```
