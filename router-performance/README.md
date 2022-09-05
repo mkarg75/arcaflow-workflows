@@ -60,11 +60,11 @@ SUT parameters affect kubernetes settings for pods and potentially other objects
 ```yaml
 sut_params:
     host_network: bool
-	deployment_replicas: int
-	node_selector: str
-	service_type: str
-	haproxy_image: str
-	ingress_operator_image: str
+        deployment_replicas: int
+        node_selector: str
+        service_type: str
+        haproxy_image: str
+        ingress_operator_image: str
 ```
 
 ```mermaid
@@ -77,7 +77,7 @@ The parameters for the router workloads should be available as defaults that wil
 ```yaml
 router_workloads:
    	defaults:
-	    samples: int
+		samples: int
 		runtime: int
    		terminations: string
   		url_path: string
