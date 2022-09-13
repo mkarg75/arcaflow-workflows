@@ -4,7 +4,7 @@
 
 This workflow defines an end-to-end benchmark test for router performance, specifically using an ingress benchmark suite against a given Kubernetes cluster. 
 
-A single top-level schema provides all of the data and metadata constructs required to describe the complete list of benchmark workloads to be run, as well global and SUT (system under test) parameters
+A single top-level schema provides all of the data and metadata constructs required to describe the complete list of benchmark workloads to be run, as well as global and SUT (system under test) parameters
 that further define the environment within which the test is run and how other parallel data collections will be handled. Finally, all data and metadata from the sequence
 of tests are post-processed into an appropriate document format and indexed into Elasticsearch.
 
